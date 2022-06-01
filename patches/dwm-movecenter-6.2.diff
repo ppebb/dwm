@@ -1,0 +1,39 @@
+diff --git a/config.def.h b/config.def.h
+index 1c0b587..c5b14ba 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -84,6 +84,7 @@ static Key keys[] = {
+ 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+ 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+ 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
++	{ MODKEY,                       XK_x,      movecenter,     {0} },
+ 	TAGKEYS(                        XK_1,                      0)
+ 	TAGKEYS(                        XK_2,                      1)
+ 	TAGKEYS(                        XK_3,                      2)
+diff --git a/dwm.c b/dwm.c
+index 4465af1..292c70e 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -183,6 +183,7 @@ static void maprequest(XEvent *e);
+ static void monocle(Monitor *m);
+ static void motionnotify(XEvent *e);
+ static void movemouse(const Arg *arg);
++static void movecenter(const Arg *arg);
+ static Client *nexttiled(Client *c);
+ static void pop(Client *);
+ static void propertynotify(XEvent *e);
+@@ -1192,6 +1193,14 @@ movemouse(const Arg *arg)
+ 	}
+ }
+ 
++void
++movecenter(const Arg *arg)
++{
++	selmon->sel->x = selmon->sel->mon->mx + (selmon->sel->mon->mw - WIDTH(selmon->sel)) / 2;
++	selmon->sel->y = selmon->sel->mon->my + (selmon->sel->mon->mh - HEIGHT(selmon->sel)) / 2;
++	arrange(selmon);
++}
++
+ Client *
+ nexttiled(Client *c)
+ {
