@@ -1,0 +1,57 @@
+From f64e5ddc9bc47dd3bca79a1eac214525ba005caf Mon Sep 17 00:00:00 2001
+From: Alexander Courtis <acourtis@atlassian.com>
+Date: Sat, 15 Feb 2020 14:23:26 +1100
+Subject: [PATCH] Grab all keycodes that map to keys.keysym
+
+There may be multiple keycodes that map to a keys.keysym. One such scenario is using xkb to remap a key: `caps:escape`
+
+When grabbing keys, we now scan all X keycode mappings and look for match.
+
+Changing keymaps via xkb or other means will not cause the keys to be "re-grabbed". This existing behaviour is desirable.
+
+---
+ dwm.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
+
+diff --git a/dwm.c b/dwm.c
+index cc4fce7..04f6220 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -1104,14 +1104,28 @@ grabkeys(void)
+ 	{
+ 		unsigned int i, j;
+ 		unsigned int modifiers[] = { 0, LockMask, numlockmask, numlockmask|LockMask };
+-		KeyCode code;
++		int kc, kcmin, kcmax, kcper;
++		KeySym keysym, *keysyms;
+ 
+ 		XUngrabKey(dpy, AnyKey, AnyModifier, root);
+-		for (i = 0; i < LENGTH(keys); i++)
+-			if ((code = XKeysymToKeycode(dpy, keys[i].keysym)))
+-				for (j = 0; j < LENGTH(modifiers); j++)
+-					XGrabKey(dpy, code, keys[i].mod | modifiers[j], root,
+-						True, GrabModeAsync, GrabModeAsync);
++
++		/* retrieve all the keycode -> keysym mappings */
++		XDisplayKeycodes(dpy, &kcmin, &kcmax);
++		keysyms = XGetKeyboardMapping(dpy, kcmin, kcmax - kcmin + 1, &kcper);
++
++		/* only look at the first keysym for each keycode as we handle shifted states */
++		for (kc = kcmin; kc <= kcmax; kc++) {
++			keysym = keysyms[(kc - kcmin) * kcper];
++			for (i = 0; i < LENGTH(keys); i++) {
++				if (keys[i].keysym == keysym) {
++					for (j = 0; j < LENGTH(modifiers); j++) {
++						XGrabKey(dpy, kc, keys[i].mod | modifiers[j], root, True, GrabModeAsync, GrabModeAsync);
++					}
++				}
++			}
++		}
++
++		XFree(keysyms);
+ 	}
+ }
+ 
+-- 
+2.25.0
+
