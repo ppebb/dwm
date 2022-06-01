@@ -81,6 +81,7 @@ static const char *downvol[]  = { "pactl", "set-sink-volume", "0", "-5%", NULL }
 static const char *mutevol[]  = { "pactl", "set-sink-mute", "0", "toggle", NULL };
 static const char *realquit[] = { "pkill", "dwm", NULL };
 
+#include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -95,6 +96,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.25} },
 	{ MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
+	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
+	{ MODKEY|ShiftMask|ControlMask, XK_j,      rotatestack,    {.i = +1 } },
+	{ MODKEY|ShiftMask|ControlMask, XK_k,      rotatestack,    {.i = -1 } },
 	// Would overlap with other commands
 	//{ MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } },
 	//{ MODKEY|Mod4Mask,              XK_l,      incrgaps,       {.i = -1 } },
