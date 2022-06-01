@@ -1,0 +1,7 @@
+config.h
+*.o
+dwm
+*.orig
+*.rej
+unapplied/
+patch.sh
