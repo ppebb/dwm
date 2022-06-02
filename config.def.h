@@ -1,20 +1,20 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
-static const int scalepreview       = 4;        /* tag preview scaling */
-static const unsigned int gappih    = 5;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 5;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 5;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 5;       /* vert outer gap between windows and screen edge */
-static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
-static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const int vertpad            = 5;       /* vertical padding of bar */
-static const int sidepad            = 5;       /* horizontal padding of bar */
-static const char *fonts[]          = { "JetBrains Mono:style=Regular:size=10" };
-static const char dmenufont[]       = "JetBrains Mono:style=Regular:size=10";
+static const unsigned int borderpx = 1;  /* border pixel of windows */
+static const unsigned int snap     = 32; /* snap pixel */
+static const int scalepreview      = 4;  /* tag preview scaling */
+static const unsigned int gappih   = 5;  /* horiz inner gap between windows */
+static const unsigned int gappiv   = 5;  /* vert inner gap between windows */
+static const unsigned int gappoh   = 5;  /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov   = 5;  /* vert outer gap between windows and screen edge */
+static const int smartgaps         = 0;  /* 1 means no outer gap when there is only one window */
+static const int showbar           = 1;  /* 0 means no bar */
+static const int topbar            = 1;  /* 0 means bottom bar */
+static const int vertpad           = 5;  /* vertical padding of bar */
+static const int sidepad           = 5;  /* horizontal padding of bar */
+static const char *fonts[]         = { "JetBrains Mono:style=Regular:size=10" };
+static const char dmenufont[]      = "JetBrains Mono:style=Regular:size=10";
 
 #include "themes/catppuccin.h"
 static const char *colors[][3]      = {
@@ -75,7 +75,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", black, "-nf", gray3, "-sb", blue, "-sf", gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", pink, "-nf", gray4, "-sb", black, "-sf", gray3, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *shotcmd[]  = { "flameshot", "gui", NULL };
 static const char *upvol[]    = { "pactl", "set-sink-volume", "0", "+5%", NULL }; // These will likely not work for anyone else 😃
