@@ -391,6 +391,7 @@ comboview(const Arg *arg) {
 	if (combo) {
 		selmon->tagset[selmon->seltags] |= newtags;
 	} else {
+		switchtag();
 		selmon->seltags ^= 1;	/*toggle tagset*/
 		combo = 1;
 		if (newtags)
