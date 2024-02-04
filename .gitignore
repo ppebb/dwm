@@ -5,3 +5,5 @@ dwm
 *.rej
 unapplied/
 patch.sh
+.cache
+compile_commands.json
