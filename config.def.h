@@ -30,6 +30,7 @@ static const char *colors[][3]      = {
 static const char *const autostart[] = {
     "discord", NULL,
     "element-desktop", NULL,
+    "sh", "-c", "cinnynoduplicate.sh", NULL,
     NULL /* terminate */
 };
 
@@ -49,8 +50,11 @@ static const Rule rules[] = {
      *	WM_CLASS(STRING) = instance, class
      *	WM_NAME(STRING) = title
      */
-    /* class      instance    title       tags mask     isfloating   monitor   ignoretransient */
-    { "jetbrains-rider", NULL, NULL,      0,            1,           -1,       1 },
+    /* class       instance   title      tags mask     isfloating   monitor   ignoretransient */
+    { "discord",   NULL,      NULL,      1,            0,           1,        1 },
+    { "Cinny",     NULL,      NULL,      1 << 0,       0,           2,        1 },
+    { "Spotify",   NULL,      NULL,      1 << 1,       0,           2,        1 },
+    /* { "steam",     NULL,      NULL,      1 << 8,       0,           2,        1 }, */
 };
 
 /* layout(s) */
@@ -84,8 +88,8 @@ static char dmenumon[2]        = "0"; /* component of dmenucmd, manipulated in s
 static const char *dmenucmd[]  = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", blue, "-nf", gray4, "-sb", black, "-sf", gray3, NULL };
 static const char *termcmd[]   = { "alacritty", NULL };
 static const char *shotcmd[]   = { "flameshot", "gui", NULL };
-static const char *upvol[]     = { "pactl", "set-sink-volume", "0", "+1%", NULL }; // These will likely not work for anyone else 😃
-static const char *downvol[]   = { "pactl", "set-sink-volume", "0", "-1%", NULL };
+static const char *upvol[]     = { "pactl", "set-sink-volume", "0", "+5%", NULL }; // These will likely not work for anyone else 😃
+static const char *downvol[]   = { "pactl", "set-sink-volume", "0", "-5%", NULL };
 static const char *mutevol[]   = { "pactl", "set-sink-mute", "0", "toggle", NULL };
 static const char *playpause[] = { "playerctl", "play-pause", NULL };
 static const char *prev[]      = { "playerctl", "previous", NULL };

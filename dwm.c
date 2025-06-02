@@ -22,6 +22,7 @@
  */
 #include <errno.h>
 #include <locale.h>
+#include <time.h>
 #include <signal.h>
 #include <stdarg.h>
 #include <stdio.h>
