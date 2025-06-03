@@ -251,6 +251,7 @@ static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
 static void togglefullscr(const Arg *arg);
 static void toggletag(const Arg *arg);
+static void toggletemps(const Arg *_);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
 static void unmanage(Client *c, int destroyed);
@@ -2330,6 +2331,16 @@ setup(void)
 	XSelectInput(dpy, root, wa.event_mask);
 	grabkeys();
 	focus(NULL);
+
+	// Initialize temps file to zero
+	FILE* fd = fopen(tempspath, "w");
+	if (!fd) {
+		fprintf(stderr, "dwm: fatal error: failed to open '%s', %d\n", tempspath, errno);
+		exit(1);
+	}
+	int num = 0;
+	fwrite(&num, sizeof(int), 1, fd);
+	fclose(fd);
 }
 
 
@@ -2553,6 +2564,25 @@ toggletag(const Arg *arg)
 		focus(NULL);
 		arrange(selmon);
 	}
+}
+
+// State for temps display read by slstatus (default off)
+static int tempsstate = 0;
+
+void
+toggletemps(const Arg *_) {
+	if (tempsstate)
+		tempsstate = 0;
+	else
+		tempsstate = 1;
+
+	FILE* fd = fopen(tempspath, "w");
+	if (!fd) {
+		fprintf(stderr, "dwm: fatal error: failed to open '%s', %d\n", tempspath, errno);
+		exit(1);
+	}
+	fwrite(&tempsstate, sizeof(int), 1, fd);
+	fclose(fd);
 }
 
 void

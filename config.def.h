@@ -20,6 +20,8 @@ static const char *fonts[]         = {
     "Material\\-Design\\-Iconic\\-Font:style=Design-Iconic-Font",
 };
 
+static const char *tempspath = "/home/ppeb/.local/state/temps"; /* file to save temps state read by slstatus */
+
 #include "themes/catppuccin.h"
 static const char *colors[][3]      = {
     /*               fg     bg     border   */
@@ -185,6 +187,7 @@ static Key keys[] = {
         { 0,                     XF86XK_AudioNext, spawn,          {.v = next } },
         { MODKEY|ShiftMask,             XK_F10,    spawn,          {.v = mutevol } },
         { MODKEY|ShiftMask|ControlMask, XK_q,      spawn,          {.v = realquit } },
+        { MODKEY,                       XK_t,      toggletemps,               {0} },
 };
 
 /* button definitions */
