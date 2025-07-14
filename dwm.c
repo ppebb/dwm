@@ -386,17 +386,12 @@ combotag(const Arg *arg) {
 
 void
 comboview(const Arg *arg) {
-	unsigned newtags = arg->ui & TAGMASK;
 	if (combo) {
-		selmon->tagset[selmon->seltags] |= newtags;
+		view(&((Arg) { .ui = selmon->tagset[selmon->seltags] | (arg->ui & TAGMASK) }));
 	} else {
-		selmon->seltags ^= 1;	/*toggle tagset*/
 		combo = 1;
-		if (newtags)
-			selmon->tagset[selmon->seltags] = newtags;
+		view(arg);
 	}
-	focus(NULL);
-	arrange(selmon);
 }
 
 void
